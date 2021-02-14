@@ -18,9 +18,14 @@ from django.urls import path
 from estudiantes import settings
 from django.conf.urls.static import static
 from estudianteapp import views
+from estudiantes import settings
 
 
 urlpatterns = [
     path('demo',views.showDemoPage),
     path('admin/', admin.site.urls),
+    path('',views.showLoginPage),
+    path('get_user_details',views.GetUserDetails),
+    path('logout_user',views.logout_user),
+    path('doLogin',views.doLogin),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
