@@ -3,6 +3,7 @@ import datetime
 from django.http import HttpResponseRedirect,HttpResponse
 from estudianteapp.EmailBackEnd import EmailBackEnd
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages  
 
 # Create your views here.
 def showDemoPage(request):
@@ -18,9 +19,10 @@ def doLogin(request):
         user=EmailBackEnd.authenticate(request,username=request.POST.get("email"),password=request.POST.get("password"))
         if user!=None:
             login(request,user)
-            return HttpResponse("Email : "+ request.POST.get("email")+ " Password : "+ request.POST.get("password"))
+            return HttpResponseRedirect('/admin_home')
         else:
-            return HttpResponse("Invalid login")
+            messages.error(request,"Invalid login  ")
+            return HttpResponseRedirect("/")
 
 
 def GetUserDetails(request):
