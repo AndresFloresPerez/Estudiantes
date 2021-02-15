@@ -18,6 +18,12 @@ Add Subject
               <form role="form" action="/add_subject_save" method="post">
                   {% csrf_token %}
                 <div class="card-body">
+
+                 <div class="form-group">
+                    <label>Subject Name</label>
+                    <input type="text" class="form-control" name="subject_name" placeholder="Subject Name">
+                  </div>
+
                  <div class="form-group">
                     <label>Course</label>
                     <select  class="form-control"   name="courseid">
@@ -30,7 +36,7 @@ Add Subject
 
                  <div class="form-group">
                     <label>Staff</label>
-                    <select  class="form-control"   name="courseid">
+                    <select  class="form-control"   name="staffid">
                         {% for staff in staffs %}
                              <option value="{{ staff.id }}"> {{ staff.first_name }} {{ staff.last_name }}</option>
                         {% endfor%}
