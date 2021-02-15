@@ -82,3 +82,10 @@ def add_student_save(request):
             messages.error(request,"Failed to Add Staff")
             return HttpResponseRedirect("/add_student")
 
+def add_subject(request):
+    courses=Courses.objects.all()
+    staffs=CustomUser.objects.filter(user_type=2)
+    return render(request,"hod_template/add_subject_template.html",{"courses":courses,"staffs":staffs})
+
+def add_subject_save(rquest):
+    pass
