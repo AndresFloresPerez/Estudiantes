@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect,HttpResponse
-from estudianteapp.models import CustomUser,Staffs,Courses,Students
+from estudianteapp.models import CustomUser,Staffs,Courses,Students,Subjects
 from django.contrib import messages  
  
 def admin_home(request):
@@ -87,5 +87,23 @@ def add_subject(request):
     staffs=CustomUser.objects.filter(user_type=2)
     return render(request,"hod_template/add_subject_template.html",{"courses":courses,"staffs":staffs})
 
-def add_subject_save(rquest):
-    pass
+def add_subject_save(request):
+    if request.method!="POST":
+        return HttpResponse("Method Not Allowed")
+    else:
+        subject_name=request.POST.get("subject_name")
+        staffid=request.POST.get("staffid")
+        staff_obj=CustomUser.objects.get(id=staffid)
+        course_id=request.POST.get("courseid")
+        course_obj=Courses.objects.get(id=course_id)
+        try:
+            subject=Subjects.objects.create(subject_name=subject_name,course_id=course_obj,staff_id=staff_obj)
+            subject.save()
+            messages.success(request,"Successfully to Add Subject")
+            return HttpResponseRedirect("/add_subject")    
+        except:
+            messages.error(request,"Failed to Add Subject")
+            return HttpResponseRedirect("/add_subject")
+
+
+    
