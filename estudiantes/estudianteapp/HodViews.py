@@ -130,6 +130,10 @@ def manage_course(request):
     courses=Courses.objects.all()
     return render(request,"hod_template/manage_course_template.html",{"courses":courses})
 
+def manage_subject(request):
+    subjects=Subjects.objects.all()
+    return render(request,"hod_template/manage_subject_template.html",{"subjects":subjects})
+
 def edit_staff(request,staff_id ):
     staff=Staffs.objects.get(admin=staff_id)
     return render(request,"hod_template/edit_staff_template.html",{"staff":staff})
@@ -237,4 +241,35 @@ def edit_course_save(request):
             messages.error(request,"Failed to Edit Student")
             return HttpResponseRedirect("/edit_course/"+course_id)
 
-    
+
+def edit_subject(request,subject_id):
+    courses=Courses.objects.all()
+    staffs=CustomUser.objects.filter(user_type=2)
+    subject=Subjects.objects.get(id=subject_id)
+    return render(request,"hod_template/edit_subject_template.html",{"courses":courses,"staffs":staffs,"subject":subject})
+
+
+def edit_subject_save(request):
+    if request.method!="POST":
+        return HttpResponse("Method Not Allowed")
+    else:
+        subject_name=request.POST.get("subject_name")
+        subject_id=request.POST.get("subject_id")
+        staff_id=request.POST.get("staffid")
+        course_id=request.POST.get("courseid")
+
+        try:
+            
+            subject_update= Subjects.objects.get(id=subject_id)
+            subject_update.subject_name=subject_name
+            staff=CustomUser.objects.get(id=staff_id)
+            subject_update.staff_id=staff
+            course= Courses.objects.get(id=course_id)
+            subject_update.course_id=course
+            subject_update.save()
+
+            messages.success(request,"Successfully Edit Student")
+            return HttpResponseRedirect("/edit_subject/"+subject_id)
+        except:
+            messages.error(request,"Failed to Edit Student")
+            return HttpResponseRedirect("/edit_subject/"+subject_id)
