@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect,HttpResponse
 from estudianteapp.models import CustomUser,Staffs,Courses,Students,Subjects
 from django.contrib import messages  
+from django.core.files.storage import FileSystemStorage
  
 def admin_home(request):
     return render(request,"hod_template/home_template.html")
@@ -66,6 +67,15 @@ def add_student_save(request):
         session_end=request.POST.get("session_end")
         course_id=request.POST.get("courseid")
         sex=request.POST.get("sex")
+
+        if request.FILES["profile"]:
+            profile=request.FILES["profile"]
+            fs=FileSystemStorage()
+            filename=fs.save(profile.name,profile)
+            profile_url=fs.url(filename)
+        else:
+            profile_url=None
+
         try:
             user=CustomUser.objects.create_user(username=username,password=password,email=email,last_name=last_name,first_name=first_name,user_type=3)
             user.students.address=address
@@ -74,7 +84,8 @@ def add_student_save(request):
             user.students.session_start_year=session_start
             user.students.session_end_year=session_end
             user.students.gender=sex
-            user.students.profile=""
+            if profile_url!=None:
+                user.students.profile=profile_url
             user.save()
             messages.success(request,"Successfully Added Staff")
             return HttpResponseRedirect("/add_student")
