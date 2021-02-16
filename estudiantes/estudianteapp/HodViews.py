@@ -189,7 +189,7 @@ def edit_student_save(request):
         course_id=request.POST.get("courseid")
         sex=request.POST.get("sex")
 
-        if request.FILES["profile"]:
+        if request.FILES.get("profile",False):
             profile=request.FILES["profile"]
             fs=FileSystemStorage()
             filename=fs.save(profile.name,profile)
