@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Control de estudiantes</title>
+  <title>Control de estudiantes | Student Login</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -45,7 +45,7 @@
        
     </ul>
 
-  <h4 style="magin-left:10px;margin-top:5px;"> Control de estudiantes admin</h2>
+  <h4 style="magin-left:10px;margin-top:5px;"> Control de estudiantes Student</h2>
     <ul class="navbar-nav ml-auto">
       <!-- Messages Dropdown Menu -->
     
@@ -63,7 +63,7 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
- {% include 'hod_template/sidebar_template.html'  with  user=user  %}
+ {% include 'student_template/sidebar_template.html'  with  user=user  %}
 
   <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -75,7 +75,7 @@
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">
             {% block page_title %}
-            HOME 
+            HOME
             {% endblock page_title %}
             </h1>
           </div><!-- /.col -->
@@ -93,7 +93,7 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  {% include 'hod_template/footer.html' %}
+  {% include 'student_template/footer.html' %}
 
   <!-- Control Sidebar -->
 

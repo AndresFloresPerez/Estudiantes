@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from estudiantes import settings
 from django.conf.urls.static import static
-from estudianteapp import views,HodViews
+from estudianteapp import views,HodViews,StaffViews,StudentViews
 from estudiantes import settings
 
 
@@ -49,4 +49,9 @@ urlpatterns = [
     path('edit_course_save',HodViews.edit_course_save,name="edit_course_save"),
     path('edit_subject/<str:subject_id>',HodViews.edit_subject,name="edit_subject"),
     path('edit_subject_save',HodViews.edit_subject_save,name="edit_subject_save"),
+    #staff url path  
+    path('staff_home',StaffViews.staff_home,name="staff_home"),
+    #student url path  
+    path('student_home',StudentViews.student_home,name="student_home"),
+
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
