@@ -4,6 +4,7 @@ from estudianteapp.models import CustomUser,Staffs,Courses,Students,Subjects
 from django.contrib import messages  
 from django.core.files.storage import FileSystemStorage
 from estudianteapp.form import AddStudentForm,EditStudent
+from django.urls import reverse
  
 def admin_home(request):
     return render(request,"hod_template/home_template.html")
@@ -27,10 +28,10 @@ def add_staff_save(request):
             user.staffs.address=address
             user.save()
             messages.success(request,"Successfully Added Staff")
-            return HttpResponseRedirect("/add_staff")
+            return HttpResponseRedirect(reverse("add_staff"))
         except:
             messages.error(request,"Failed to Add Staff")
-            return HttpResponseRedirect("/add_staff")
+            return HttpResponseRedirect(reverse("add_staff"))
 
 def add_course(request):
     return render(request,"hod_template/add_course_template.html")
@@ -44,10 +45,10 @@ def add_course_save(request):
             course_model=Courses(course_name=course_name)
             course_model.save()
             messages.success(request,"Successfully Added Course")
-            return HttpResponseRedirect("/add_course")
+            return HttpResponseRedirect(reverse("add_course"))
         except:
             messages.error(request,"Failed Added Course")
-            return HttpResponseRedirect("/add_course")
+            return HttpResponseRedirect(reverse("add_course"))
 
 
 def add_student(request):
@@ -92,10 +93,10 @@ def add_student_save(request):
                     user.students.profile=profile_url
                 user.save()
                 messages.success(request,"Successfully Added Staff")
-                return HttpResponseRedirect("/add_student")
+                return HttpResponseRedirect(reverse("add_student"))
             except:
                 messages.error(request,"Failed to Add Staff")
-                return HttpResponseRedirect("/add_student")
+                return HttpResponseRedirect(reverse("add_student"))
         else:
             form=AddStudentForm(request.POST)
             return render(request,"hod_template/add_student_template.html",{ "form":form})
@@ -119,10 +120,10 @@ def add_subject_save(request):
             subject=Subjects.objects.create(subject_name=subject_name,course_id=course_obj,staff_id=staff_obj)
             subject.save()
             messages.success(request,"Successfully to Add Subject")
-            return HttpResponseRedirect("/add_subject")    
+            return HttpResponseRedirect(reverse("add_subject"))    
         except:
             messages.error(request,"Failed to Add Subject")
-            return HttpResponseRedirect("/add_subject")
+            return HttpResponseRedirect(reverse("add_subject"))
 
 
     
@@ -171,10 +172,10 @@ def edit_staff_save(request):
             staff_model.address=address
             staff_model.save()
             messages.success(request,"Successfully Edit Staff")
-            return HttpResponseRedirect("/edit_staff/"+staff_id)
+            return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id} ))
         except:
             messages.error(request,"Failed to Edit Staff")
-            return HttpResponseRedirect("/edit_staff/"+staff_id)
+            return HttpResponseRedirect(reverse("edit_staff",kwargs={"staff_id":staff_id} ))
 
 
 def edit_student(request,student_id):
@@ -239,10 +240,10 @@ def edit_student_save(request):
                 student_user.save()
                 del request.session["student_id"]
                 messages.success(request,"Successfully Edit Student")
-                return HttpResponseRedirect("/edit_student/"+student_id)
+                return HttpResponseRedirect(reverse("edit_student", kwargs={"student_id":student_id} ))
             except:
                 messages.error(request,"Failed to Edit Student")
-                return HttpResponseRedirect("/edit_student/"+student_id)
+                return HttpResponseRedirect(reverse("edit_student",kwargs={"student_id":student_id} ))
         else:
             form=EditStudent(request.POST)
             student=Students.objects.get(admin=student_id)
@@ -266,10 +267,10 @@ def edit_course_save(request):
             course_update.course_name=course_name
             course_update.save()
             messages.success(request,"Successfully Edit Student")
-            return HttpResponseRedirect("/edit_course/"+course_id)
+            return HttpResponseRedirect(reverse("edit_course", kwargs={"course_id":course_id} ))
         except:
             messages.error(request,"Failed to Edit Student")
-            return HttpResponseRedirect("/edit_course/"+course_id)
+            return HttpResponseRedirect(reverse("edit_course",kwargs={"course_id":course_id} ))
 
 
 def edit_subject(request,subject_id):
@@ -299,7 +300,7 @@ def edit_subject_save(request):
             subject_update.save()
 
             messages.success(request,"Successfully Edit Student")
-            return HttpResponseRedirect("/edit_subject/"+subject_id)
+            return HttpResponseRedirect(reverse("edit_subject",kwargs={"subject_id":subject_id} ))
         except:
             messages.error(request,"Failed to Edit Student")
-            return HttpResponseRedirect("/edit_subject/"+subject_id)
+            return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id} ))
