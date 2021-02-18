@@ -304,3 +304,7 @@ def edit_subject_save(request):
         except:
             messages.error(request,"Failed to Edit Student")
             return HttpResponseRedirect(reverse("edit_subject", kwargs={"subject_id":subject_id} ))
+
+
+def manage_session(request):
+    return render(request,"hod_template/manage_session_template.html")
