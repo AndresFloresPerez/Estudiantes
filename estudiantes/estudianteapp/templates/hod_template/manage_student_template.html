@@ -44,8 +44,7 @@ Manage Student
                       <th>Gender</th>
                       <th>Profile</th>
                       <th>Address</th>
-                      <th>Start year</th>
-                      <th>End Year</th>
+                      <th>Session</th>
                       <th>Course</th>
                       <th>Last Login</th>
                       <th>Date Joined</th>
@@ -63,8 +62,7 @@ Manage Student
                       <td>{{ student.gender }}</td>
                       <td><image src="{{ student.profile }}" width=150 heigth=170></td>
                       <td>{{ student.address }}</td>
-                      <td>{{ student.session_start_year }}</td>
-                      <td>{{ student.session_end_year }}</td>
+                      <td>{{ student.sessionYearModel_id.session_start_year }} TO {{ student.sessionYearModel_id.session_end_year }} </td>
                       <td>{{ student.course_id.course_name }}</td>
                       <td>{{ student.admin.last_login }}</td>
                       <td>{{ student.admin.date_joined }}</td>

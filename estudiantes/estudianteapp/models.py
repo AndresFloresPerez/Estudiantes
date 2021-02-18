@@ -8,6 +8,7 @@ class SessionYearModel(models.Model):
     id=models.AutoField(primary_key=True)
     session_start_year=models.DateField()
     session_end_year=models.DateField()
+    objects=models.Manager()
 
 class CustomUser(AbstractUser):
     user_type_data=((1,"HOD"),(2,"Staff"),(3,"Student"))
@@ -52,7 +53,7 @@ class Students(models.Model):
     profile=models.FileField()
     address=models.TextField()
     course_id=models.ForeignKey(Courses,on_delete=models.DO_NOTHING,default=1)
-    SessionYearModel=models.ForeignKey(SessionYearModel,on_delete=models.CASCADE)
+    sessionYearModel_id=models.ForeignKey(SessionYearModel,on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
@@ -62,7 +63,7 @@ class Attendance(models.Model):
     subject_id=models.ForeignKey(Subjects,on_delete=models.DO_NOTHING)
     attendance_date=models.DateTimeField(auto_now_add=True)
     created_at=models.DateField(auto_now_add=True)
-    SessionYearModel=models.ForeignKey(SessionYearModel,on_delete=models.CASCADE)
+    sessionYearModel_id=models.ForeignKey(SessionYearModel,on_delete=models.CASCADE)
     updated_at=models.DateField(auto_now_add=True)
     objects=models.Manager()
 
@@ -141,7 +142,7 @@ def create_user_profile(sender,instance,created, **kwargs):
         if instance.user_type==2:
             Staffs.objects.create(admin=instance)
         if instance.user_type==3:
-            Students.objects.create(admin=instance,session_start_year="2020-01-01",session_end_year="2021-01-01",address="",profile="",gender="")
+            Students.objects.create(admin=instance,sessionYearModel_id=SessionYearModel.objects.get(id=1),address="",profile="",gender="")
     
 
 @receiver(post_save, sender=CustomUser)

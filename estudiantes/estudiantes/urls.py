@@ -50,6 +50,7 @@ urlpatterns = [
     path('edit_subject/<str:subject_id>',HodViews.edit_subject,name="edit_subject"),
     path('edit_subject/<str:subject_id>',HodViews.edit_subject,name="edit_subject"),
     path('manage_session',HodViews.manage_session,name="manage_session"),
+    path('add_session_save',HodViews.add_session_save,name="add_session_save"),
     #staff url path  
     path('staff_home',StaffViews.staff_home,name="staff_home"),
     #student url path   
